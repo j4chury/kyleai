@@ -5,7 +5,8 @@ const {
     GatewayIntentBits, 
     ActivityType, 
     Events,
-    Collection
+    Collection,
+    MessageFlags
 } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
@@ -69,8 +70,26 @@ client.on(Events.MessageCreate, async (message) => {
 
     if (message.channel.id !== config.channelId) return;
 
-    if (message.channel.rateLimitPerUser !== 5) {
-        message.channel.setRateLimitPerUser(5, 'The slowmode is required so the AI bot can answer properly.');
+    //if (message.channel.rateLimitPerUser !== 5) {
+    //    message.channel.setRateLimitPerUser(5, 'The slowmode is required so the AI bot can answer properly.');
+    //}
+    
+    try {
+        if (message.channel.rateLimitPerUser !== 5) {
+            message.channel.setRateLimitPerUser(5, 'The slowmode is required so the AI bot can answer properly.');
+        }
+    } catch (err) {
+        if (err.code === 50013){
+            return interaction.reply({
+                content: "❌ **MANAGE_CHANNELS** permission is missing!",
+                flags: MessageFlags.Ephemeral
+            });
+        } else {
+            return interaction.reply({
+                content: "❌ An unexpected error occurred!",
+                flags: MessageFlags.Ephemeral
+            });
+        }
     }
 
     message.channel.sendTyping();
