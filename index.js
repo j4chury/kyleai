@@ -99,3 +99,15 @@ async function connectDB() {
 }
 
 connectDB();
+
+const express = require("express");
+const app = express();
+
+
+app.get("/", (req, res) => {
+  res.send("Bot active");
+});
+
+// Render usa una variable PORT automáticamente
+app.listen(process.env.PORT || 3000, () => {
+});
