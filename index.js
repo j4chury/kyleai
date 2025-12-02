@@ -76,16 +76,16 @@ client.on(Events.MessageCreate, async (message) => {
     
     try {
         if (message.channel.rateLimitPerUser !== 5) {
-            message.channel.setRateLimitPerUser(5, 'The slowmode is required so the AI bot can answer properly.');
+            await message.channel.setRateLimitPerUser(5, 'The slowmode is required so the AI bot can answer properly.');
         }
     } catch (err) {
         if (err.code === 50013){
-            return interaction.reply({
+            return message.reply({
                 content: "❌ **MANAGE_CHANNELS** permission is missing!",
                 flags: MessageFlags.Ephemeral
             });
         } else {
-            return interaction.reply({
+            return message.reply({
                 content: "❌ An unexpected error occurred!",
                 flags: MessageFlags.Ephemeral
             });
