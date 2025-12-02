@@ -81,13 +81,11 @@ client.on(Events.MessageCreate, async (message) => {
     } catch (err) {
         if (err.code === 50013){
             return message.reply({
-                content: "❌ **MANAGE_CHANNELS** permission is missing!",
-                flags: MessageFlags.Ephemeral
+                content: "❌ I need *manage channels* permission! Or you can manually set a 5s slowmode.",
             });
         } else {
             return message.reply({
                 content: "❌ An unexpected error occurred!",
-                flags: MessageFlags.Ephemeral
             });
         }
     }
